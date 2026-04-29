@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>es-CR</string>
+	<key>CFBundleExecutable</key>
+	<string>firmador</string>
+	<key>CFBundleIconFile</key>
+	<string>firmador</string>
+	<key>CFBundleIdentifier</key>
+	<string>cr.libre.firmador</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Firmador</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
+	<key>LSRequiresNativeExecution</key>
+	<true/>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>Firmador</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>firmador</string>
+			</array>
+		</dict>
+	</array>
+	</dict>
+</plist>

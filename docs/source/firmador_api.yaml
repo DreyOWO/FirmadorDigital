@@ -1,0 +1,294 @@
+openapi: 3.0.3
+info:
+  title: Firmador API
+  description: >
+    API Java para procesos de firma digital.
+    Documentación estática generada a partir de la especificación en `documentacion_api.odt`.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /firma/firme_multiple:
+    post:
+      summary: Firmar múltiples documentos
+      description: Permite firmar varios documentos en una sola solicitud.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                signRequests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      documentName: { type: string }
+                      documentExtension: { type: string }
+                      b64Document: { type: string }
+                      settings: { type: object }
+                      certToken: { type: string }
+              required: [ signRequests ]
+      responses:
+        "200":
+          description: Documentos preparados para la firma
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { type: object }
+        "400": { description: Petición mal formada }
+        "500": { description: Error interno }
+
+  /firma/firme:
+    post:
+      summary: Firmar un documento
+      description: Inicia el proceso de firma de un único documento.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                DocumentExtension: { type: string }
+                b64Document: { type: string }
+                settings: { type: object }
+                certToken: { type: string }
+              required: [ DocumentExtension, b64Document, certToken ]
+      responses:
+        "200":
+          description: Documento preparado para la firma
+        "400": { description: Error en los parámetros }
+        "500": { description: Error inesperado }
+
+  /firma/completa_multiple:
+    post:
+      summary: Completar firma de múltiples documentos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                signatures:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      documentid: { type: string }
+                      certificate: { type: string }
+                      signature:
+                        type: object
+                        properties:
+                          algorithm: { type: string }
+                          value: { type: string }
+      responses:
+        "200":
+          description: Documentos firmados correctamente
+        "400": { description: Error en la petición }
+        "404": { description: Documento no encontrado }
+        "500": { description: Error interno }
+
+  /firma/completa:
+    post:
+      summary: Completar firma de un documento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                documentid: { type: string }
+                certificate: { type: string }
+                signature:
+                  type: object
+                  properties:
+                    algorithm: { type: string }
+                    value: { type: string }
+              required: [ documentid, certificate, signature ]
+      responses:
+        "200":
+          description: Documento firmado correctamente
+        "400": { description: Error en los datos }
+        "404": { description: Documento no encontrado }
+        "500": { description: Error inesperado }
+
+  /firma/delete:
+    post:
+      summary: Eliminar un documento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                documentid: { type: string }
+              required: [ documentid ]
+      responses:
+        "204":
+          description: Documento eliminado correctamente
+        "404": { description: Documento no encontrado }
+
+  /firma/getPreview:
+    post:
+      summary: Obtener previsualización de documento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                documentid: { type: string }
+                page: { type: integer }
+              required: [ documentid, page ]
+      responses:
+        "200":
+          description: Página renderizada correctamente
+          content:
+            image/png: { }
+        "404": { description: Documento no encontrado }
+        "500": { description: Error al renderizar }
+
+  /valida:
+    post:
+      summary: Validar un documento firmado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                document:
+                  type: string
+                policy:
+                  type: string
+              required: [document]
+            example:
+              document: "data:application/pdf;base64,JVBERi0xLjUKJ..."
+              policy: "default"
+      responses:
+        "200":
+          description: Resultado de la validación
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid: { type: boolean }
+                  message: { type: string }
+                  certificateSubject: { type: string }
+                  issuer: { type: string }
+                  signingTime: { type: string, format: date-time }
+              example:
+                valid: true
+                message: "Firma válida"
+                certificateSubject: "CN=Usuario, O=Institución"
+                issuer: "CN=CA Interna"
+                signingTime: "2025-09-25T10:00:00Z"
+components:
+  schemas:
+    ValidationRequest:
+      type: object
+      properties:
+        document:
+          type: string
+          description: Documento en base64 a validar
+        policy:
+          type: string
+          description: Política de validación opcional
+      required: [document]
+
+    ValidationResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        message:
+          type: string
+        certificateSubject:
+          type: string
+        issuer:
+          type: string
+        signingTime:
+          type: string
+          format: date-time
+
+    CompleteDocumentResponse:
+      type: object
+      properties:
+        documentid:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+      required: [documentid, status]
+
+    DocumentPreviewRequest:
+      type: object
+      properties:
+        documentid:
+          type: string
+        page:
+          type: integer
+      required: [documentid, page]
+
+    DocumentPreviewResponse:
+      type: object
+      properties:
+        documentid:
+          type: string
+        page:
+          type: integer
+        image:
+          type: string
+          format: byte
+          description: Imagen de la página codificada en base64
+      required: [documentid, page, image]
+
+    SignMultipleRequest:
+      type: object
+      properties:
+        signRequests:
+          type: array
+          items:
+            $ref: "#/components/schemas/SignRequest"
+      required: [signRequests]
+
+    SignRequest:
+      type: object
+      properties:
+        documentName:
+          type: string
+        documentExtension:
+          type: string
+        b64Document:
+          type: string
+        settings:
+          type: object
+        certToken:
+          type: string
+      required: [documentName, documentExtension, b64Document, certToken]
+
+    SignResponse:
+      type: object
+      properties:
+        documentid:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+      required: [documentid, status]
+
+    signingTime:
+      type: string
+      format: date-time

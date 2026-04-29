@@ -1,0 +1,13 @@
+/bin/
+/target/
+/.classpath
+/.project
+/.settings/
+/docs/build/
+build-dir/
+.flatpak-builder/
+*.flatpak
+repository/
+.idea
+*.patch
+.vs/

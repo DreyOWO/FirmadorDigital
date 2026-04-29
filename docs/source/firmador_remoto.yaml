@@ -1,0 +1,214 @@
+"openapi": "3.1.1"
+"info":
+  "title": "API de Firmador Remoto"
+  "description": "**Ejecución del Firmador Remoto**\n\nEl firmador remoto se puede iniciar utilizando la siguiente URL:\n`firmador:http://localhost:8000#<puerto>#<minimizado>`\n\n- `<puerto>`: Número de puerto en el que el firmador estará escuchando.\n- `<minimizado>`: Valor booleano (True o False) que define si la ventana debe iniciarse minimizada.\n\nSi no se especifican estos valores, el firmador se ejecutará en el puerto 3516 por defecto y la ventana se abrirá en modo maximizado.\n"
+  "version": "1.0.0"
+"servers":
+  -
+    "description": "Servidor Local"
+    "url": "https://localhost:3516"
+"paths":
+  "/ok":
+    "get":
+      tags:
+        - "Autenticaci\u00f3n"
+      summary: "Verificar la conexion con el firmador"
+      description: "Este endpoint se utiliza para verificar el estado de apertura y escucha de firmador libre"
+      responses:
+        204:
+          description: "Conexi\u00f3n exitosa con el firmador"
+  "/doRegister":
+    "get":
+      tags:
+        - "Autenticaci\u00f3n"
+      summary: "Registrar Origen"
+      description: "Este endpoint permite registrar el origen en el sistema"
+      responses:
+        200:
+          description: "Autorizado exitosamente"
+        202:
+          description: "Ya estaba autorizado"
+        403:
+          description: "No autorizado"
+  "/sign":
+    "post":
+      "tags":
+        - "Firma de Documentos"
+      "summary": "Recibir datos para firmar un documento"
+      "description": "Este endpoint recibe un conjunto de datos en formato JSON, los procesa y genera una firma digital utilizando una tarjeta criptográfica.\n"
+      "requestBody":
+        "required": true
+        "content":
+          "application/json":
+            "schema":
+              "type": "object"
+              "properties":
+                "tobesigned":
+                  "type": "object"
+                  "description": "Objeto que contiene los datos que se deben firmar."
+                  "properties":
+                    "bytes":
+                      "type": "string"
+                      "contentMediaType": "application/octet-stream"
+                      "description": "Datos en formato Base64 que deben ser firmados digitalmente."
+                  "required":
+                    - "bytes"
+                "documentid":
+                  "type": "string"
+                  "format": "uuid"
+                  "description": "Identificador único del documento."
+                "documentName":
+                  "type": "string"
+                  "description": "Nombre del documento que se mostrará en la interfaz del usuario."
+                "hostname":
+                  "type": "string"
+                  "description": "Nombre del servidor que ejecutó la firma digital."
+                "b64image":
+                  "type": "string"
+                  "contentMediaType": "image/png"
+                  "description": "Imagen en Base64 que se mostrará en el panel de ingreso de PIN."
+              "required":
+                - "tobesigned"
+                - "documentid"
+                - "documentName"
+                - "hostname"
+      "responses":
+        "200":
+          "description": "Firma procesada correctamente."
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+                "properties":
+                  "signature":
+                    "type": "object"
+                    "properties":
+                      "algorithm":
+                        "type": "string"
+                        "example": "RSA_SHA256"
+                      "value":
+                        "type": "string"
+                        "contentMediaType": "application/octet-stream"
+                        "description": "Valor de la firma digital en Base64."
+                  "documentid":
+                    "type": "string"
+                    "format": "uuid"
+                  "certificate":
+                    "type": "string"
+                    "contentMediaType": "application/x-x509-ca-cert"
+                    "description": "Certificado utilizado para la firma en formato Base64."
+        "400":
+          "description": "Datos de entrada incorrectos."
+        "406":
+          "description": "No se pudo completar la firma."
+        "500":
+          "description": "Error interno del servidor."
+  "/{filename}":
+    "delete":
+      "tags":
+        - "Firma de Documentos"
+      "summary": "Eliminar un documento"
+      "parameters":
+        -
+          "name": "filename"
+          "in": "path"
+          "required": true
+          "schema":
+            "type": "string"
+      "responses":
+        "200":
+          "description": "Documento eliminado correctamente."
+        "404":
+          "description": "Documento no encontrado."
+        "500":
+          "description": "Error interno del servidor."
+  "/authenticate":
+    "post":
+      "tags":
+        - "Registro y Verificación"
+      "summary": "Autenticación con firma digital"
+      "requestBody":
+        "required": true
+        "content":
+          "application/json":
+            "schema":
+              "type": "object"
+              "properties":
+                "serialnumber":
+                  "type": "string"
+                "authCode":
+                  "type": "string"
+                "b64Salt":
+                  "type": "string"
+                  "contentMediaType": "application/octet-stream"
+                "authIdentifier":
+                  "type": "string"
+                "authTime":
+                  "type": "string"
+                  "format": "date-time"
+                "domain":
+                  "type": "string"
+                "b64image":
+                  "type": "string"
+                  "contentMediaType": "image/png"
+              "required":
+                - "serialnumber"
+                - "authCode"
+                - "b64Salt"
+                - "authIdentifier"
+                - "authTime"
+                - "domain"
+      "responses":
+        "200":
+          "description": "Autenticación realizada correctamente."
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+                "properties":
+                  "bytes":
+                    "type": "string"
+                    "contentMediaType": "application/octet-stream"
+                  "digestAlgorithm":
+                    "type": "string"
+                    "nullable": true
+                  "name":
+                    "type": "string"
+        "400":
+          "description": "Datos de entrada incorrectos."
+        "406":
+          "description": "Autenticación fallida."
+        "500":
+          "description": "Error interno del servidor."
+  "/certificates":
+    "get":
+      "tags":
+        - "Certificados"
+      "summary": "Obtener certificados disponibles"
+      "responses":
+        "200":
+          "description": "Lista de certificados recuperada correctamente."
+          "content":
+            "application/json":
+              "schema":
+                "type": "array"
+                "items":
+                  "type": "object"
+                  "properties":
+                    "identification":
+                      "type": "string"
+                    "certificate":
+                      "type": "string"
+                      "contentMediaType": "application/x-x509-ca-cert"
+        "500":
+          "description": "Error interno del servidor."
+  "/close":
+    "post":
+      "tags":
+        - "Cierre"
+      "summary": "Cerrar la aplicación"
+      "responses":
+        "200":
+          "description": "La aplicación se cerrará correctamente."
+        "500":
+          "description": "Error interno del servidor."

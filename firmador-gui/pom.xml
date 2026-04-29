@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>cr.libre.firmador</groupId>
+    <artifactId>firmador-parent</artifactId>
+    <version>2.0.0</version>
+  </parent>
+  
+  <artifactId>firmador-gui</artifactId>
+  <packaging>jar</packaging>
+  
+  <name>Firmador GUI Application</name>
+  <description>GUI application for Firmador digital signature library</description>
+  
+  <dependencies>
+    <!-- Core Library -->
+    <dependency>
+      <groupId>cr.libre.firmador</groupId>
+      <artifactId>firmador-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    
+    <!-- GUI Framework -->
+    <dependency>
+      <groupId>com.formdev</groupId>
+      <artifactId>flatlaf</artifactId>
+    </dependency>
+    
+    <!-- Testing -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <finalName>firmador</finalName>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+    
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>java9-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <multiReleaseOutput>true</multiReleaseOutput>
+              <release>${java.specification.version}</release>
+              <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
+              </compileSourceRoots>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.6.2</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>module-info.class</exclude>
+                    <exclude>META-INF/versions/9/module-info.class</exclude>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/AL2.0</exclude>
+                    <exclude>META-INF/DEPENDENCIES</exclude>
+                    <exclude>META-INF/LGPL2.1</exclude>
+                    <exclude>META-INF/MANIFEST.MF</exclude>
+                    <exclude>META-INF/sun-jaxb.episode</exclude>
+                    <exclude>META-INF/versions/9/OSGI-INF/MANIFEST.MF</exclude>
+                    <exclude>META-INF/services/org.apache.poi.extractor.ExtractorProvider</exclude>
+                    <exclude>META-INF/services/org.apache.poi.sl.draw.ImageRenderer</exclude>
+                    <exclude>META-INF/services/org.apache.poi.ss.usermodel.WorkbookProvider</exclude>
+                    <exclude>META-INF/services/eu.europa.esig.dss.asic.common.extract.ASiCContainerExtractorFactory</exclude>
+                    <exclude>META-INF/services/eu.europa.esig.dss.asic.common.merge.ASiCContainerMergerFactory</exclude>
+                    <exclude>META-INF/services/eu.europa.esig.dss.extension.SignedDocumentExtenderFactory</exclude>
+                    <exclude>META-INF/services/eu.europa.esig.dss.spi.policy.SignaturePolicyValidator</exclude>
+                    <exclude>META-INF/services/eu.europa.esig.dss.spi.validation.analyzer.DocumentAnalyzerFactory</exclude>
+                    <exclude>xsd/binding.xml</exclude>
+                    <exclude>xsd/bindings.xml</exclude>
+                    <exclude>xsd/catalog.cat</exclude>
+                    <exclude>policy/certificate-constraint.xml</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <manifestEntries>
+                    <Main-Class>Firmador</Main-Class>
+                    <Multi-Release>true</Multi-Release>
+                    <Permissions>all-permissions</Permissions>
+                  </manifestEntries>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/services/eu.europa.esig.dss.validation.DocumentValidatorFactory</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer" />
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer" />
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
+<!-- Made with Bob -->

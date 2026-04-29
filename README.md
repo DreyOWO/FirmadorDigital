@@ -1,0 +1,81 @@
+# Firmador
+
+Herramienta de escritorio para firmar documentos que cumplen con la [Política
+de Formatos Oficiales de los Documentos Electrónicos Firmados Digitalmente](
+https://www.mifirmadigital.go.cr/?smd_process_download=1&download_id=941
+) de Costa Rica.
+
+Está diseñado para funcionar con Java y funciona en GNU/Linux, macOS y Windows.
+En el caso de macOS y Windows requiere instalar [Java](https://java.com/) y los
+controladores de lector y tarjeta del sitio web de [descargas de Soporte Firma
+Digital](https://soportefirmadigital.com/sfdj/dl.aspx).
+
+
+## Descarga
+
+Se puede descargar el firmador en el sitio web https://firmador.libre.cr.
+
+
+## Capturas de pantalla
+
+![Firmador para GNU/Linux](pantallazos/gnulinux.png)
+
+![Firmador para macOS](pantallazos/macos.png)
+
+![Firmador para Windows](pantallazos/windows.png)
+
+
+## Instalación y ejecución
+
+Por el momento Firmador no requiere instalación, es un paquete ejecutable.
+
+En Windows se puede abrir directamente con doble clic.
+
+En macOS se puede ejecutar también con doble clic, aunque la primera vez habrá
+que abrirlo con control + clic o bien clic secundario sobre el fichero desde el
+Finder y seleccionar Abrir. El sistema preguntará si se quiere abrir una
+aplicación descargada de Internet y habrá que confirmar. Una vez hecho esto,
+las siguientes aperturas funcionarán con doble clic.
+
+En algunas distribuciones como Ubuntu se puede ejecutar con doble clic si se
+configura el fichero como ejecutable. En las que no esté disponible esta
+característica, se puede ejecutar desde terminal con `java -jar firmador.jar`.
+
+Firmador tiene algunas configuraciones adicionales de forma opcional, se pueden
+consultar en el fichero [preguntas-frecuentes.md](preguntas-frecuentes.md).
+
+
+## Compilación del código fuente
+
+Para las personas interesadas en el desarrollo de Firmador, para compilar
+Firmador se requiere git, Maven y OpenJDK.
+
+Para obtener el código fuente de Firmador, ejecutar:
+
+    git clone https://codeberg.org/firmador/firmador.git
+
+Para entrar en el directorio del repositorio descargado:
+
+    cd firmador
+
+Para generar el JAR:
+
+    mvn clean package
+
+Para ejecutar el JAR:
+
+    cd target
+    java -jar firmador.jar
+
+
+## Licencia
+
+Copyright © de los autores de Firmador.
+
+La lista de autores de Firmador se encuentra en el fichero
+[AUTHORS.md](AUTHORS.md).
+
+Este programa es software libre, distribuido bajo la licencia GPL versión 3 o
+en sus versiones posteriores.
+
+El texto de la licencia está disponible en el fichero [COPYING](COPYING).
