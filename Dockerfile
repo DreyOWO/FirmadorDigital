@@ -4,6 +4,7 @@ WORKDIR /workspace
 COPY pom.xml ./pom.xml
 COPY pom-parent.xml ./pom-parent.xml
 COPY firmador-core ./firmador-core
+COPY firmador-gui ./firmador-gui
 COPY firmador-backend ./firmador-backend
 
 RUN mvn -f ./pom-parent.xml -pl ./firmador-core -am install -DskipTests && \
