@@ -5,12 +5,13 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.UUID;
 
 @Component
-public class JwtTokenProvider {
+public class JwtTokenProvider implements cr.libre.firmador.backend.service.AuthService.JwtSupport {
     
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -19,9 +20,10 @@ public class JwtTokenProvider {
     private long jwtExpiration;
     
     private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(jwtSecret.getBytes());
+        return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
     
+    @Override
     public String generateToken(UUID userId, String email, String role) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpiration);
@@ -37,24 +39,32 @@ public class JwtTokenProvider {
     }
     
     public UUID getUserIdFromToken(String token) {
-        Claims claims = Jwts.parser()
+        Claims claims = getClaims(token);
+        return UUID.fromString(claims.getSubject());
+    }
+
+    public String getRoleFromToken(String token) {
+        Claims claims = getClaims(token);
+        Object role = claims.get("role");
+        return role == null ? "USER" : role.toString();
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parser()
                 .setSigningKey(getSigningKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-        
-        return UUID.fromString(claims.getSubject());
     }
     
     public boolean validateToken(String token) {
         try {
-            Jwts.parser()
-                    .setSigningKey(getSigningKey())
-                    .build()
-                    .parseSignedClaims(token);
+            getClaims(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
     }
 }
+
+// Made with Bob

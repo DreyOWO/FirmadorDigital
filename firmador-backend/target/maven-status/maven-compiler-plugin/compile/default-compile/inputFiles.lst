@@ -9,11 +9,13 @@ C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\l
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\dto\LoginResponse.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\dto\DocumentDTO.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\controller\SignatureController.java
+C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\dto\UserProfileDTO.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\repository\UserRepository.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\model\WorkflowStep.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\model\Workflow.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\security\UserPrincipal.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\dto\LoginRequest.java
+C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\service\AuthService.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\repository\WorkflowStepRepository.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\security\JwtAuthenticationFilter.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\config\CorsConfig.java
@@ -29,6 +31,7 @@ C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\l
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\model\Document.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\model\User.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\config\SupabaseConfig.java
+C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\controller\AuthController.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\FirmadorBackendApplication.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\security\JwtTokenProvider.java
 C:\Users\Andrey\source\repos\FirmadorDigital\firmador-backend\src\main\java\cr\libre\firmador\backend\dto\WorkflowDTO.java

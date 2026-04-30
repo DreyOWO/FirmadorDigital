@@ -47,7 +47,19 @@ public class DocumentService {
     }
     
     public boolean canUserViewDocument(UUID documentId, UUID userId) {
-        return pendingRepository.existsByDocumentIdAndUserId(documentId, userId);
+        Document document = documentRepository.findById(documentId)
+            .orElseThrow(() -> new RuntimeException("Document not found"));
+
+        if (userId.equals(document.getCreatedBy())) {
+            return true;
+        }
+
+        if (pendingRepository.existsByDocumentIdAndUserId(documentId, userId)) {
+            return true;
+        }
+
+        return getUserDocumentHistory(userId).stream()
+            .anyMatch(historyDocument -> documentId.equals(historyDocument.getId()));
     }
     
     public Resource getDocumentContent(UUID documentId) {

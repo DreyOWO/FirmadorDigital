@@ -29,6 +29,7 @@ class JwtTokenProviderTest {
 
         assertTrue(jwtTokenProvider.validateToken(token));
         assertEquals(userId, jwtTokenProvider.getUserIdFromToken(token));
+        assertEquals("ADMIN", jwtTokenProvider.getRoleFromToken(token));
     }
 
     @Test

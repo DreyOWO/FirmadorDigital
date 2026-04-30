@@ -15,10 +15,16 @@ import java.util.UUID;
 public class UserPrincipal implements UserDetails {
     
     private UUID id;
+    private String role;
+    
+    public UserPrincipal(UUID id) {
+        this(id, "user");
+    }
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        String normalizedRole = role == null || role.isBlank() ? "USER" : role.trim().toUpperCase();
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + normalizedRole));
     }
     
     @Override
@@ -51,3 +57,5 @@ public class UserPrincipal implements UserDetails {
         return true;
     }
 }
+
+// Made with Bob

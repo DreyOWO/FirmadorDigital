@@ -20,10 +20,12 @@ cr\libre\firmador\backend\dto\WorkflowDTO$WorkflowStepDTO.class
 cr\libre\firmador\backend\controller\DocumentController.class
 cr\libre\firmador\backend\service\SupabaseStorageService.class
 cr\libre\firmador\backend\repository\PendingDocumentRepository.class
+cr\libre\firmador\backend\service\AuthService.class
 cr\libre\firmador\backend\repository\DocumentRepository.class
 cr\libre\firmador\backend\dto\SignatureRequestDTO.class
 cr\libre\firmador\backend\model\User.class
 cr\libre\firmador\backend\model\Workflow.class
+cr\libre\firmador\backend\service\AuthService$JwtSupport.class
 cr\libre\firmador\backend\model\PendingDocument.class
 cr\libre\firmador\backend\model\Document.class
 cr\libre\firmador\backend\dto\LoginRequest.class
@@ -32,5 +34,7 @@ cr\libre\firmador\backend\security\JwtTokenProvider.class
 cr\libre\firmador\backend\repository\NotificationRepository.class
 cr\libre\firmador\backend\dto\DocumentDTO.class
 cr\libre\firmador\backend\config\CorsConfig.class
+cr\libre\firmador\backend\dto\UserProfileDTO.class
+cr\libre\firmador\backend\controller\AuthController.class
 cr\libre\firmador\backend\repository\UserRepository.class
 cr\libre\firmador\backend\service\SupabaseStorageService$1.class

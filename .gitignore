@@ -11,3 +11,45 @@ repository/
 .idea
 *.patch
 .vs/
+
+# IntelliJ / VS Code / OS
+*.iml
+.idea/
+.DS_Store
+Thumbs.db
+
+# Java / Maven / Gradle
+**/target/
+**/build/
+**/out/
+.mvn/
+.gradle/
+
+# Node / frontend
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+coverage/
+**/coverage/
+.vite/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs / temp
+*.log
+tmp/
+temp/
+
+# Local env / secrets
+.env
+.env.*
+!.env.example

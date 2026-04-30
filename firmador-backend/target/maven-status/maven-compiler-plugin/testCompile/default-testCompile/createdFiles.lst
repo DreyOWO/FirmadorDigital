@@ -1,6 +1,8 @@
-cr\libre\firmador\backend\service\DocumentServiceTest$1.class
+cr\libre\firmador\backend\controller\AuthControllerTest.class
 cr\libre\firmador\backend\controller\DocumentControllerTest.class
-cr\libre\firmador\backend\security\JwtTokenProviderTest.class
-cr\libre\firmador\backend\service\DocumentServiceTest.class
+cr\libre\firmador\backend\service\AuthServiceTest.class
 cr\libre\firmador\backend\service\SignatureServiceTest.class
 cr\libre\firmador\backend\controller\SignatureControllerTest.class
+cr\libre\firmador\backend\service\DocumentServiceTest$1.class
+cr\libre\firmador\backend\security\JwtTokenProviderTest.class
+cr\libre\firmador\backend\service\DocumentServiceTest.class

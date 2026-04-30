@@ -3,9 +3,9 @@ spring:
     name: firmador-backend
   
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/firmador}
+    url: ${DATABASE_URL:jdbc:postgresql://db.scsekucswnfeocsklqvz.supabase.co:5432/postgres}
     username: ${DATABASE_USER:postgres}
-    password: ${DATABASE_PASSWORD:postgres}
+    password: ${DATABASE_PASSWORD:Bazinga1342}
     driver-class-name: org.postgresql.Driver
   
   jpa:
@@ -30,8 +30,8 @@ server:
 
 # Supabase Configuration
 supabase:
-  url: ${SUPABASE_URL}
-  key: ${SUPABASE_KEY}
+  url: ${SUPABASE_URL:https://scsekucswnfeocsklqvz.supabase.co}
+  key: ${SUPABASE_KEY:sb_secret_gceE7dXiIRSvudDbEgEgBw_rWSnUbYS}
   storage:
     bucket: documents
     endpoint: ${SUPABASE_URL}/storage/v1
