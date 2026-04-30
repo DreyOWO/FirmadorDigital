@@ -31,7 +31,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     }),
   enableGuestMode: () => {
     localStorage.setItem(ACCESS_TOKEN_KEY, DEV_GUEST_TOKEN)
-    set(() => ({ isAuthenticated: true, isGuestMode: true }))
+    set(() => ({ isAuthenticated: false, isGuestMode: true }))
   },
   logout: () => {
     localStorage.removeItem(ACCESS_TOKEN_KEY)

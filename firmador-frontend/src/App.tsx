@@ -27,7 +27,7 @@ function App() {
         <Route path="/workflows" element={<WorkflowManager />} />
       </Route>
 
-      <Route path="/" element={<Navigate to="/dashboard" />} />
+      <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
     </Routes>
   )
 }
