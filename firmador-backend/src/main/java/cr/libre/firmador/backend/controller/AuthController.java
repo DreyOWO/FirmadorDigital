@@ -6,6 +6,7 @@ import cr.libre.firmador.backend.dto.UserProfileDTO;
 import cr.libre.firmador.backend.security.UserPrincipal;
 import cr.libre.firmador.backend.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,13 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authService.login(request));
+        try {
+            return ResponseEntity.ok(authService.login(request));
+        } catch (IllegalArgumentException ex) {
+            throw new org.springframework.web.server.ResponseStatusException(HttpStatus.UNAUTHORIZED, ex.getMessage(), ex);
+        } catch (IllegalStateException ex) {
+            throw new org.springframework.web.server.ResponseStatusException(HttpStatus.FORBIDDEN, ex.getMessage(), ex);
+        }
     }
 
     @GetMapping("/me")

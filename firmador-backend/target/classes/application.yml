@@ -38,7 +38,7 @@ supabase:
 
 # JWT Configuration
 jwt:
-  secret: ${JWT_SECRET:your-secret-key-change-in-production}
+  secret: ${JWT_SECRET:firmador-digital-jwt-secret-change-in-production-please-use-a-long-random-value-2026-secure-default-key}
   expiration: 86400000 # 24 hours
 
 # CORS Configuration
