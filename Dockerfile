@@ -7,7 +7,8 @@ COPY firmador-core ./firmador-core
 COPY firmador-gui ./firmador-gui
 COPY firmador-backend ./firmador-backend
 
-RUN mvn -f ./firmador-core/pom.xml install -DskipTests && \
+RUN mvn -f ./pom-parent.xml install -N -DskipTests && \
+    mvn -f ./firmador-core/pom.xml install -DskipTests && \
     mvn -f ./firmador-backend/pom.xml package -DskipTests
 
 FROM eclipse-temurin:17-jre
