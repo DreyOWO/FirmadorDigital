@@ -7,7 +7,6 @@
 build-dir/
 .flatpak-builder/
 *.flatpak
-repository/
 .idea
 *.patch
 .vs/
