@@ -7,6 +7,7 @@ import PendingDocuments from './pages/PendingDocuments'
 import DocumentViewer from './pages/DocumentViewer'
 import AdminPanel from './pages/AdminPanel'
 import WorkflowManager from './pages/WorkflowManager'
+import UploadDocument from './pages/UploadDocument'
 import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
 
@@ -34,6 +35,7 @@ function App() {
         <Route path="/documents/:id/view" element={<DocumentViewer />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/workflows" element={<WorkflowManager />} />
+        <Route path="/subir-documento" element={<UploadDocument />} />
       </Route>
 
       <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />

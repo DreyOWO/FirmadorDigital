@@ -10,7 +10,6 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState('')
   const navigate = useNavigate()
   const setAuth = useAuthStore((s) => s.setAuthenticated)
-  const enableGuestMode = useAuthStore((s) => s.enableGuestMode)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,51 +36,50 @@ export default function Login() {
     }
   }
 
-  const handleGuestAccess = () => {
-    setErrorMessage('')
-    enableGuestMode()
-    navigate('/dashboard')
-  }
-
   return (
-    <div className="max-w-md mx-auto mt-20 bg-white p-6 rounded shadow">
-      <h2 className="text-2xl font-semibold mb-4">Iniciar sesión</h2>
-      <p className="text-gray-600 mb-4">
-        Usa tu cuenta si el backend está disponible, o entra en modo invitado para navegar la interfaz.
-      </p>
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-card__icon">📄</div>
+        <h2 className="auth-card__title">FirmaDigital</h2>
+        <p className="auth-card__subtitle">
+          Ingresa tus credenciales para acceder al sistema
+        </p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          autoComplete="email"
-          placeholder="email"
-          className="p-2 border rounded"
-        />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          autoComplete="current-password"
-          placeholder="password"
-          className="p-2 border rounded"
-        />
+        <form onSubmit={handleSubmit} className="auth-form">
+          <label className="auth-label" htmlFor="email">Usuario</label>
+          <input
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            autoComplete="email"
+            placeholder="usuario@empresa.com"
+            className="auth-input"
+          />
 
-        {errorMessage ? (
-          <div className="text-sm text-red-600" role="alert">
-            {errorMessage}
-          </div>
-        ) : null}
+          <label className="auth-label" htmlFor="password">Contraseña</label>
+          <input
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            autoComplete="current-password"
+            placeholder="••••••••"
+            className="auth-input"
+          />
 
-        <button disabled={loading} className="mt-2 bg-blue-600 text-white p-2 rounded">
-          {loading ? 'Ingresando...' : 'Ingresar'}
-        </button>
+          {errorMessage ? (
+            <div className="auth-error" role="alert">
+              {errorMessage}
+            </div>
+          ) : null}
 
-        <button type="button" onClick={handleGuestAccess} className="p-2 border rounded">
-          Continuar como invitado
-        </button>
-      </form>
+          <button disabled={loading} className="auth-primary-button">
+            {loading ? 'Ingresando...' : 'Iniciar sesión'}
+          </button>
+
+        </form>
+      </div>
     </div>
   )
 }
