@@ -6,14 +6,12 @@ COPY pom-parent.xml ./pom-parent.xml
 COPY firmador-core ./firmador-core
 COPY firmador-backend ./firmador-backend
 
-RUN mvn -f ./pom-parent.xml -pl ./firmador-core -am install -DskipTests && \
-    mvn -f ./firmador-backend/pom.xml package -DskipTests
+RUN mvn -f ./pom-parent.xml clean install -DskipTests
 
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 
-COPY --from=build /workspace/firmador-backend/target/firmador-backend-2.0.0.jar ./app.jar
+COPY --from=build /workspace/firmador-backend/target/*.jar ./app.jar
 
 EXPOSE 8080
-
-CMD ["sh", "-c", "java -jar ./app.jar --server.port=${PORT:-8080}"]
+CMD ["java", "-jar", "./app.jar"]
