@@ -2,7 +2,8 @@ import axios from 'axios'
 import type { AxiosError } from 'axios'
 import type { DocumentDTO } from '../types'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+const RAW_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+const API_URL = RAW_API_URL.replace(/\/+$/, '')
 
 export type LoginResponse = {
   accessToken?: string
